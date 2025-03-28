@@ -2,7 +2,7 @@ import numpy as np
 
 
 class DataLoader:
-    def __init__(self, NUM_FEATURES):
+    def __init__(self, NUM_FEATURES=10):
         self.NUM_FEATURES = NUM_FEATURES
         self.weights = np.random.rand(NUM_FEATURES)
 
