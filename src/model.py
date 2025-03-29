@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.metrics import r2_score
 
 
 class ProjectModel:
@@ -19,3 +20,10 @@ class ProjectModel:
 
     def predict(self, X):
         return self.model.predict(X)
+    
+    def score(self):
+        if self.X_acc is None:
+            return None
+        y_pred = self.predict(self.X_acc)
+        print(y_pred, self.y_acc)
+        return r2_score(self.y_acc, y_pred)
