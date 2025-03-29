@@ -24,3 +24,6 @@ class ProjectModel:
         if self.X_acc is None:
             return None
         return self.model.score(self.X_acc, self.y_acc)
+    
+    def is_fit(self):
+        return not (self.X_acc is None)
