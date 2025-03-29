@@ -10,7 +10,7 @@ class DataLoader:
     def get_data(self, batch_size=100):
         # Генерация случайных данных
         X = np.random.rand(batch_size, self.NUM_FEATURES) * 10
-        y = np.dot(X, self.weights) + np.random.randn(batch_size) * 5
+        y = np.dot(X, self.weights) + np.random.randn(batch_size) * 2
         return X, y
     
     def get_weights(self):
