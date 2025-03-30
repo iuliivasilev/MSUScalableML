@@ -9,7 +9,7 @@ on:
       - main
     # Запуск каждую минуту
   schedule:
-    - cron: "* * * * *"
+    - cron: "0 * * * *"
 
 jobs:
   background-training:
