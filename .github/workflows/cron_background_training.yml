@@ -35,8 +35,8 @@ jobs:
       run: |
         mkdir -p artifacts  # Создаем папку для новых артефактов
         python main.py --mode single  # Запускаем одну итерацию обучения
-        cp loc/data_stream.pkl artifacts/data_stream.pkl  # Сохраняем текущий state data_stream
-        cp loc/p_model.pkl artifacts/p_model.pkl  # Сохраняем текущий state модели
+        cp loc/DataLoader.pkl artifacts/DataLoader.pkl  # Сохраняем текущий state data_stream
+        cp loc/Model.pkl artifacts/Model.pkl  # Сохраняем текущий state модели
         
     - name: Upload new artifacts
       uses: actions/upload-artifact@v4
