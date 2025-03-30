@@ -1,5 +1,13 @@
 name: Background Training
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
 # on:
 #   schedule:
 #     # Запуск каждую минуту всей задачи
