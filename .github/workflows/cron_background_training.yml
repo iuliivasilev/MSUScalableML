@@ -9,7 +9,7 @@ on:
       - main
     # Запуск каждую минуту
   schedule:
-    - cron: "0 * * * *"
+    - cron: "* * * * *"
 
 jobs:
   background-training:
@@ -25,10 +25,13 @@ jobs:
         pip install -r requirements.txt
 
     - name: Attempt to download previous artifacts
-      uses: actions/download-artifact@v4
+      uses: dawidd6/action-download-artifact@v6 # actions/download-artifact@v4
       with:
+        workflow: cron_backgroubd_training.yaml
         name: training-artifacts
         path: loc  # Извлекаем артефакты в папку loc
+        workflow_conclusion: success
+        branch: main
       continue-on-error: true  # Игнорируем ошибку, если артефакт не найден
 
     - name: Run training script with periodic artifact generation
