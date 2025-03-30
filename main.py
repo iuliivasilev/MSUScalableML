@@ -58,7 +58,7 @@ def all(n_iter=10):
     # Обучение модели на порционных данных
     for _ in range(n_iter):
         step(data_stream, p_model)
-    sleep(5)  # Задержка для имитации реального времени
+        sleep(5)  # Задержка для имитации реального времени
 
 
 def stepwise():
