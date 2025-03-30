@@ -7,8 +7,10 @@ class ProjectModel:
         self.model = model
         self.X_acc = None
         self.y_acc = None
+        self.iter = 0
 
     def fit(self, X, y):
+        self.iter += 1
         if self.X_acc is None:
             self.X_acc = X
             self.y_acc = y
@@ -27,3 +29,6 @@ class ProjectModel:
     
     def is_fit(self):
         return not (self.X_acc is None)
+    
+    def get_iter(self):
+        return self.iter

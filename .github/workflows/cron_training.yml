@@ -9,7 +9,7 @@ on:
       - main
     # Запуск каждую минуту
   schedule:
-    - cron: "* * * * *"
+    - cron: "0 * * * *"
 
 jobs:
   background-training:
@@ -27,7 +27,7 @@ jobs:
     - name: Attempt to download previous artifacts
       uses: dawidd6/action-download-artifact@v6 # actions/download-artifact@v4
       with:
-        workflow: cron_background_training.yml
+        workflow: cron_training.yml
         name: training-artifacts
         path: loc  # Извлекаем артефакты в папку loc
         workflow_conclusion: success
@@ -36,16 +36,16 @@ jobs:
 
     - name: Run training script with periodic artifact generation
       run: |
-        mkdir -p artifacts  # Создаем папку для новых артефактов
+        # mkdir -p artifacts  # Создаем папку для новых артефактов
         python main.py --mode single  # Запускаем одну итерацию обучения
-        cp loc/DataLoader.pkl artifacts/DataLoader.pkl  # Сохраняем текущий state data_stream
-        cp loc/Model.pkl artifacts/Model.pkl  # Сохраняем текущий state модели
+        # cp loc/DataLoader.pkl artifacts/DataLoader.pkl  # Сохраняем текущий state data_stream
+        # cp loc/Model.pkl artifacts/Model.pkl  # Сохраняем текущий state модели
         
     - name: Upload new artifacts
       uses: actions/upload-artifact@v4
       with:
         name: training-artifacts
-        path: artifacts/
+        # path: artifacts/
 
     - name: Upload logs
       uses: actions/upload-artifact@v4

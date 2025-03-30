@@ -47,6 +47,7 @@ def step(data_stream, model):
         # print(data_stream.get_weights())
         # print(p_model.model.coef_)
     model.fit(X, y)  # Обучаем модель на текущей порции данных
+    logging.info(f"Iter: {model.get_iter()}")
     logging.info("Added new data")
     logging.info(f"Quality on full data: {model.score()}")
 
