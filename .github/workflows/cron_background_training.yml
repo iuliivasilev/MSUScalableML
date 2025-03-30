@@ -27,7 +27,7 @@ jobs:
     - name: Attempt to download previous artifacts
       uses: dawidd6/action-download-artifact@v6 # actions/download-artifact@v4
       with:
-        workflow: cron_backgroubd_training.yml
+        workflow: cron_background_training.yml
         name: training-artifacts
         path: loc  # Извлекаем артефакты в папку loc
         workflow_conclusion: success
