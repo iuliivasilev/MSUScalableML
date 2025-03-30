@@ -1,3 +1,4 @@
+from time import sleep
 from src.data_loader import DataLoader
 from src.model import ProjectModel
 from sklearn.linear_model import LinearRegression
@@ -57,6 +58,7 @@ def all(n_iter=10):
     # Обучение модели на порционных данных
     for _ in range(n_iter):
         step(data_stream, p_model)
+    sleep(5)  # Задержка для имитации реального времени
 
 
 def stepwise():
