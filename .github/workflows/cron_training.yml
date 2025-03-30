@@ -1,5 +1,10 @@
 name: CRON Background Training
 
+# Links:
+# 1. https://medium.com/@michamarszaek/cross-workflow-artifact-passing-in-github-actions-7f20acbb1b70
+# 2. https://github.com/actions/upload-artifact?ysclid=m8vso6oti3815989621
+# 3. 
+
 on:
   push:
     branches:
@@ -45,6 +50,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: training-artifacts
+        path: loc/
         # path: artifacts/
 
     - name: Upload logs
