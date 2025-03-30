@@ -24,8 +24,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Check if previous artifacts exist
+      id: check-artifacts
+      run: |
+        if [ -d "loc" ]; then
+          echo "Artifacts directory exists."
+        else
+          echo "Artifacts directory does not exist."
+          exit 0
+        fi
+
     - name: Download previous artifacts
-      uses: actions/download-artifact@v3
+      if: steps.check-artifacts.outcome == 'success'
+      uses: actions/download-artifact@v4
       with:
         name: training-artifacts
         path: loc  # Извлекаем артефакты в папку loc
@@ -33,13 +44,10 @@ jobs:
     - name: Run training script with periodic artifact generation
       run: |
         mkdir -p artifacts  # Создаем папку для новых артефактов
-        for i in {1..5}; do  # Запускаем 5 итераций с задержкой
-          python main.py --mode single  # Запускаем одну итерацию обучения
-          sleep 60  # Задержка в 60 секунд между итерациями
-          cp loc/data_stream.pkl artifacts/data_stream_$i.pkl  # Сохраняем текущий state data_stream
-          cp loc/p_model.pkl artifacts/p_model_$i.pkl  # Сохраняем текущий state модели
-        done
-
+        python main.py --mode single  # Запускаем одну итерацию обучения
+        cp loc/data_stream.pkl artifacts/data_stream.pkl  # Сохраняем текущий state data_stream
+        cp loc/p_model.pkl artifacts/p_model.pkl  # Сохраняем текущий state модели
+        
     - name: Upload new artifacts
       uses: actions/upload-artifact@v4
       with:
