@@ -3,7 +3,6 @@ name: CRON Background Training
 # Links:
 # 1. https://medium.com/@michamarszaek/cross-workflow-artifact-passing-in-github-actions-7f20acbb1b70
 # 2. https://github.com/actions/upload-artifact?ysclid=m8vso6oti3815989621
-# 3. 
 
 on:
   push:
@@ -12,7 +11,7 @@ on:
   pull_request:
     branches:
       - main
-    # Запуск каждую минуту
+    # Запуск каждый час
   schedule:
     - cron: "0 * * * *"
 
@@ -30,7 +29,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Attempt to download previous artifacts
-      uses: dawidd6/action-download-artifact@v6 # actions/download-artifact@v4
+      uses: dawidd6/action-download-artifact@v6
       with:
         workflow: cron_training.yml
         name: training-artifacts
@@ -40,18 +39,13 @@ jobs:
       continue-on-error: true  # Игнорируем ошибку, если артефакт не найден
 
     - name: Run training script with periodic artifact generation
-      run: |
-        # mkdir -p artifacts  # Создаем папку для новых артефактов
-        python main.py --mode single  # Запускаем одну итерацию обучения
-        # cp loc/DataLoader.pkl artifacts/DataLoader.pkl  # Сохраняем текущий state data_stream
-        # cp loc/Model.pkl artifacts/Model.pkl  # Сохраняем текущий state модели
+      run: python main.py --mode single  # Запускаем одну итерацию обучения
         
     - name: Upload new artifacts
       uses: actions/upload-artifact@v4
       with:
         name: training-artifacts
         path: loc/
-        # path: artifacts/
 
     - name: Upload logs
       uses: actions/upload-artifact@v4
