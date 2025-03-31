@@ -7,11 +7,6 @@ on:
   pull_request:
     branches:
       - main
-      
-# on:
-#   schedule:
-#     # Запуск каждую минуту всей задачи
-#     - cron: "* * * * *"
 
 jobs:
   background-training:
@@ -30,7 +25,7 @@ jobs:
       run: |
         for i in {1..5}; do  # Запускаем 5 итераций с задержкой
           python main.py --mode single  # Запускаем одну итерацию обучения
-          sleep 60  # Задержка в 60 секунд между итерациями
+          sleep 10  # Задержка в 10 секунд между итерациями
         done
 
     - name: Upload logs
