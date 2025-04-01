@@ -3,34 +3,17 @@ from src.data_loader import DataLoader
 from src.model import ProjectModel
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
+from src.utils import load_object, save_object
 import logging
 import argparse
-import pickle
 import os
+
 
 # Настройка логирования
 logging.basicConfig(filename="training.log", level=logging.INFO, format="%(asctime)s - %(message)s")
 
 SAVE_DIR = "loc"
 os.makedirs(SAVE_DIR, exist_ok=True)
-
-
-def save_object(obj, filename):
-    """Сохраняет объект в файл через pickle."""
-    filepath = os.path.join(SAVE_DIR, filename)
-    with open(filepath, "wb") as f:
-        pickle.dump(obj, f)
-    logging.info(f"Object saved to {filepath}")
-
-
-def load_object(filename):
-    """Загружает объект из файла через pickle."""
-    filepath = os.path.join(SAVE_DIR, filename)
-    if os.path.exists(filepath):
-        with open(filepath, "rb") as f:
-            logging.info(f"Object loaded from {filepath}")
-            return pickle.load(f)
-    return None
 
 
 def step(data_stream, model):
@@ -63,16 +46,18 @@ def all(n_iter=10):
 
 
 def stepwise():
-    data_stream = load_object("DataLoader.pkl")
-    p_model = load_object("Model.pkl")
+    dl_path = os.path.join(SAVE_DIR, "DataLoader.pkl")
+    mdl_path = os.path.join(SAVE_DIR, "Model.pkl")
+    data_stream = load_object(dl_path)
+    p_model = load_object(mdl_path)
     if data_stream is None:
         data_stream = DataLoader()
     if p_model is None:
         p_model = ProjectModel(LinearRegression())
     
     step(data_stream, p_model)
-    save_object(data_stream, "DataLoader.pkl")
-    save_object(p_model, "Model.pkl")
+    save_object(data_stream, dl_path)
+    save_object(p_model, mdl_path)
 
 
 if __name__ == "__main__":
