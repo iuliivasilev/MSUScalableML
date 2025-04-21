@@ -11,9 +11,10 @@ on:
   pull_request:
     branches:
       - main
-    # Запуск каждый час
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 10 * * *"     # Запуск каждый день в 10:00
+    # - cron: "0 * * * *"     # Запуск каждый час
+    # - cron: "* * * * *"     # Запуск каждую минуту
 
 jobs:
   background-training:
